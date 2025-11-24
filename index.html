@@ -331,70 +331,121 @@ Well done, I suppose.
       return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
-    function buildIntro(name, relationship, sender, detail) {
+    function randomItem(list) {
+      return list[Math.floor(Math.random() * list.length)];
+    }
+
+    function buildContextLines(name, relationship, sender, detail) {
       const who = name ? capitalise(name) : "you";
-      const rel = relationship ? relationship.toLowerCase() : "person of interest";
-      const senderName = sender ? capitalise(sender) : null;
+      const rel = relationship ? relationship.toLowerCase() : "";
+      const senderName = sender ? capitalise(sender) : "Someone close to you";
 
-      const senderLine = senderName
-        ? `${senderName} told me you are their ${rel}.`
-        : `Someone has informed me you are, broadly speaking, a functioning adult.`;
+      let openerOptions = [];
 
-      const detailLine = detail
-        ? `\n\nThey also mentioned: "${detail}". I am choosing not to unpack that too deeply today.`
-        : "";
+      if (rel) {
+        openerOptions.push(
+          `${senderName} tells me you’re their ${rel}. I’m not sure what the correct protocol is for that, so I’ve gone with “card”.`,
+          `${senderName} has reported that you occupy the role of ${rel}. I wasn’t aware that position was still open, but congratulations nonetheless.`,
+          `Apparently you’re ${senderName}’s ${rel}. I don’t fully understand how that works, but it seems to have stuck.`
+        );
+      } else {
+        openerOptions.push(
+          `${senderName} tells me it’s your birthday. I’ve decided to take this at face value.`,
+          `${senderName} insists today is significant for you. I have chosen not to argue.`
+        );
+      }
 
-      return `${who},\n\n${senderLine}${detailLine}\n`;
+      const opener = `${who},\n\n${randomItem(openerOptions)}`;
+
+      let detailLine = "";
+      if (detail) {
+        const trimmedDetail = detail.trim();
+        const detailOptions = [
+          `\n\nThey also mentioned that you "${trimmedDetail}". That feels like the sort of thing HR should know about, but I’ve opted to send a card instead.`,
+          `\n\nThere was also a note about you "${trimmedDetail}". I’m not sure if that’s a strength, a weakness, or both.`,
+          `\n\nApparently you "${trimmedDetail}". I don’t have the emotional bandwidth to unpack that, but it does make you sound oddly competent.`,
+          `\n\nIn the file it says you "${trimmedDetail}". I didn’t know we were keeping files, but here we are.`
+        ];
+        detailLine = randomItem(detailOptions);
+      }
+
+      return { opener, detailLine };
     }
 
     function buildMarkBody(name, relationship, tone, sender, detail) {
-      const intro = buildIntro(name, relationship, sender, detail);
+      const { opener, detailLine } = buildContextLines(
+        name,
+        relationship,
+        sender,
+        detail
+      );
 
       const rel = relationship ? relationship.toLowerCase() : "human being";
 
-      const bases = {
-        polite: [
-          `\nI’m contractually obliged by social convention to acknowledge your birthday.
+      const politeTemplates = [
+        () => {
+          const middle = `\n\nI don’t really “do” celebrations, but civilisation has strong views on birthdays and I’m trying to appear broadly functional.\n\nFrom what I gather, you’re doing a reasonable job of being a ${rel} and not completely losing the plot. That already puts you ahead of several major institutions.\n\nSo yes. Happy birthday. Please treat this as a formal acknowledgement that you have successfully completed another year of existence.`;
+          return opener + detailLine + middle;
+        },
+        () => {
+          const middle = `\n\nThe spreadsheet of your life has gained another row. I’d colour it amber: not a crisis, but certainly something to keep an eye on.\n\nBy all accounts you’re holding things together with more grace than the current government, which is an admittedly low bar but still counts.\n\nI hope the next twelve months are marginally less chaotic and contain at least one decent pudding.`;
+          return opener + detailLine + middle;
+        },
+        () => {
+          const middleFirst = `\n\nBirthdays are essentially performance reviews where the universe refuses to give clear feedback. Still, the fact people are sending cards suggests you’re doing something right.`;
+          const maybeExtra = Math.random() < 0.5
+            ? `\n\nIf nothing else, you have successfully accumulated experiences, anecdotes, and at least one regrettable purchase. That’s what passes for growth these days.`
+            : "";
+          const closing = `\n\nHappy birthday. Take the compliment, even if it’s making you slightly uncomfortable.`;
+          return opener + detailLine + middleFirst + maybeExtra + closing;
+        }
+      ];
 
-As ${rel}, you remain one of the few variables in my life that hasn’t completely collapsed into chaos, which feels… statistically impressive.
+      const grimTemplates = [
+        () => {
+          const middle = `\n\nIt’s your birthday again, which feels frankly excessive. Time keeps advancing like a badly managed Direct Debit.\n\nStill, the reports on you as a ${rel} are surprisingly positive. In a world held together by emails and printer errors, that’s not nothing.\n\nMay the coming year contain fewer pointless meetings, fewer minor catastrophes, and more evenings where you actually sit down.`;
+          return opener + detailLine + middle;
+        },
+        () => {
+          const middleFirst = `\n\nAnother year older. The body sends more error messages, the inbox never empties, and yet you continue to show up. Statistically, that’s impressive.`;
+          const middleSecond = `\n\nFrom what I’ve heard, you’re one of the people keeping the whole thing from collapsing completely. I’m not saying that’s wise, but it is admirable.`;
+          const closing = `\n\nHappy birthday. Or at least, not-unhappy birthday. Let’s not oversell it.`;
+          return opener + detailLine + middleFirst + middleSecond + closing;
+        },
+        () => {
+          const middle = `\n\nHonestly, adulthood seems to be mostly forms, heating bills, and pretending “busy” is a personality. The fact you’re still maintaining relationships and remembering dates is bordering on heroic.\n\nIf you can manage a quiet drink, an early night, and one small decision made purely for yourself, I’d call that a successful celebration.`;
+          return opener + detailLine + middle;
+        }
+      ];
 
-I hope the next year contains marginally fewer disappointments than the last. Let’s call that optimism.`,
-          `\nAnother birthday. The spreadsheet of your life has gained a new row.
+      const existentialTemplates = [
+        () => {
+          const middleFirst = `\n\nOn paper, today is just an arbitrary point on an arbitrary calendar in an uncaring universe.\n\nBut apparently you matter to people. Statistically, that’s as close to meaning as most of us get.`;
+          const closing = `\n\nSo yes, happy birthday. Against all odds, your existence seems to be improving the general mess rather than making it worse. Try to enjoy that, briefly.`;
+          return opener + detailLine + middleFirst + closing;
+        },
+        () => {
+          const middleFirst = `\n\nTime is basically a slow, bureaucratic conveyor belt shunting us towards the inevitable, and today it has paused just long enough to say: “You again?”`;
+          const maybeDetailEcho = detail
+            ? `\n\nThe fact you still find the energy to ${detail.toLowerCase()} suggests a level of resilience I can only describe as suspicious.`
+            : "";
+          const closing = `\n\nHappy birthday. Let’s make the next section of the belt marginally less awful, or at least better catered.`;
+          return opener + detailLine + middleFirst + maybeDetailEcho + closing;
+        },
+        () => {
+          const middle = `\n\nIf you zoom out far enough, none of this matters. But the people who care about you clearly haven’t zoomed out that far, and I’m inclined to trust their judgement over the void’s.\n\nExisting, caring, turning up – that’s the whole game. Everything else is admin.`;
+          const closing = `\n\nHappy birthday. You’re doing more of it right than you think.`;
+          return opener + detailLine + middle;
+        }
+      ];
 
-As your self-appointed ${rel}, I’d like to formally note that you are still here, still trying, and somehow still answering emails.
+      let templates;
+      if (tone === "grim") templates = grimTemplates;
+      else if (tone === "existential") templates = existentialTemplates;
+      else templates = politeTemplates;
 
-That’s more than can be said for most of Western civilisation. Well done.`
-        ],
-        grim: [
-          `\nIt’s your birthday again, which feels frankly excessive.
-
-As your ${rel}, I have watched you navigate this flaming skip we call adulthood with a sort of tragic competence I deeply respect.
-
-May the coming year contain fewer meetings, fewer crises, and at least one pudding-based highlight.`,
-          `\nAnother year older. The body deteriorates, capitalism marches on, and yet here you are, still turning up.
-
-As your ${rel}, I consider this a sort of minor miracle.
-
-Happy birthday. Or at least, not-unhappy birthday. Let’s not oversell it.`
-        ],
-        existential: [
-          `\nTime is a slow, bureaucratic conveyor belt, shunting us all towards the same inevitable outcome, and today it has stopped briefly to remind you of that fact.
-
-As your ${rel}, I feel morally obliged to say: I’m glad you’re on the belt at the same time as me.
-
-Happy birthday. Let’s make the next bit marginally less awful.`,
-          `\nOn paper, today is just an arbitrary point on an arbitrary calendar in an uncaring universe.
-
-But as your ${rel}, I’ve decided that your continued existence is statistically significant.
-
-So yes, happy birthday. Against all odds, I’m genuinely pleased you exist. Don’t make a big thing of it.`
-        ]
-      };
-
-      const options = bases[tone] || bases.polite;
-      const body = options[Math.floor(Math.random() * options.length)];
-
-      return intro + body;
+      const templateFn = randomItem(templates);
+      return templateFn();
     }
 
     function buildJezBody(name, sender, detail) {
@@ -405,9 +456,16 @@ So yes, happy birthday. Against all odds, I’m genuinely pleased you exist. Don
         ? `${senderName} says it’s your birthday, which is legally binding in party terms.`
         : `Apparently it’s your birthday, which I’m prepared to accept without paperwork.`;
 
-      const detailLine = detail
-        ? `\n\nThey also mentioned: "${detail}". That sounds dangerously like a good night out waiting to happen.`
-        : "";
+      let detailLine = "";
+      if (detail) {
+        const trimmedDetail = detail.trim();
+        const options = [
+          `\n\nThey also mentioned you "${trimmedDetail}". That’s not a red flag, that’s basically a personality brand.`,
+          `\n\nI heard you "${trimmedDetail}". That’s exactly the sort of thing that leads to “a quick one” turning into a three-day saga.`,
+          `\n\nThere was something about you "${trimmedDetail}". I don’t fully understand it, but I respect it.`
+        ];
+        detailLine = randomItem(options);
+      }
 
       return `${who},
 
@@ -422,9 +480,16 @@ Happy birthday. You’re not old, you’re just… conceptually interesting.`;
       const who = name ? capitalise(name) : "Comrade";
       const senderName = sender ? capitalise(sender) : "Someone you trust";
 
-      const detailLine = detail
-        ? `\n\n${senderName} also reckons you’re the kind of person who "${detail}". Frankly, that’s exactly the sort of energy we need for the collapse of civilisation.`
-        : "";
+      let detailLine = "";
+      if (detail) {
+        const trimmedDetail = detail.trim();
+        const options = [
+          `\n\n${senderName} also reckons you’re the sort of person who "${trimmedDetail}". That is exactly the kind of energy you need when the system finally keels over.`,
+          `\n\nApparently you "${trimmedDetail}". Good. We’re going to need people like you when the sensible ones give up.`,
+          `\n\nIn my experience, people who "${trimmedDetail}" are either visionaries or a health and safety issue. Sometimes both.`
+        ];
+        detailLine = randomItem(options);
+      }
 
       return `${who},
 
