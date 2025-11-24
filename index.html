@@ -87,7 +87,7 @@
       font-size: 14px;
     }
 
-    input, select {
+    input, select, textarea {
       width: 100%;
       padding: 8px 10px;
       border-radius: 0;
@@ -97,7 +97,12 @@
       box-sizing: border-box;
     }
 
-    input:focus, select:focus, button:focus {
+    textarea {
+      min-height: 70px;
+      resize: vertical;
+    }
+
+    input:focus, select:focus, textarea:focus, button:focus {
       outline: 1px solid #e1e1e1;
       outline-offset: 1px;
     }
@@ -173,21 +178,6 @@
       overflow: hidden;
     }
 
-    .card::before {
-      content: "HMRC APPROVED";
-      position: absolute;
-      top: 10px;
-      right: -42px;
-      font-size: 10px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      transform: rotate(33deg);
-      border: 1px solid #c0c0c0;
-      padding: 4px 48px;
-      background: rgba(245, 245, 245, 0.85);
-      color: #666;
-    }
-
     .card-header {
       font-family: "Georgia", "Times New Roman", serif;
       font-size: 13px;
@@ -215,15 +205,18 @@
       font-size: 13px;
       color: #555;
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
     }
 
-    .card-meta {
-      font-size: 11px;
+    .pill {
+      border-radius: 999px;
+      padding: 3px 10px;
+      border: 1px solid #444;
+      font-size: 10px;
       text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: #949494;
+      letter-spacing: 0.16em;
+      color: #a5a5a5;
     }
 
     /* Easter egg fonts */
@@ -244,16 +237,6 @@
 
     .card--superhans .card-header {
       color: #0d6f3c;
-    }
-
-    .pill {
-      border-radius: 999px;
-      padding: 3px 10px;
-      border: 1px solid #444;
-      font-size: 10px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: #a5a5a5;
     }
 
     .status {
@@ -277,8 +260,17 @@
         <label for="name">Who is this for?</label>
         <input id="name" type="text" placeholder="e.g. Sophie, Mum, Jeff from Procurement" />
 
-        <label for="relationship">What are they to you?</label>
-        <input id="relationship" type="text" placeholder="friend, partner, colleague, mysterious landlord" />
+        <label for="relationship">What are they to them?</label>
+        <input id="relationship" type="text" placeholder="dad, partner, colleague, landlord" />
+
+        <label for="sender">Who is this from?</label>
+        <input id="sender" type="text" placeholder="e.g. Sam, your favourite child" />
+
+        <label for="detail">Tell me something about them</label>
+        <textarea id="detail" placeholder="e.g. hates group chats, loves trifle, owns too many novelty mugs"></textarea>
+        <p class="help-text">
+          Mark will treat this as evidence. Use wisely.
+        </p>
 
         <label for="tone">How bleak are we going?</label>
         <select id="tone">
@@ -308,9 +300,13 @@
       <article class="card" id="card">
         <header>
           <div class="card-header" id="card-header">From the desk of Mark Corrigan</div>
-          <h2 class="card-title" id="card-title">Happy Birthday (within reason)</h2>
+          <h2 class="card-title" id="card-title">Happy birthday (within reason)</h2>
         </header>
         <div class="card-body" id="card-body">
+Sophie,
+
+Sam told me you are their dad.
+
 I don’t really “do” celebrations, but society insists,
 so here we are.
 
@@ -320,7 +316,6 @@ have survived another rotation around a dying star.
 Well done, I suppose.
         </div>
         <footer class="card-footer">
-          <span class="card-meta" id="card-meta">Draft 1 of n</span>
           <span class="pill">Uncomfortably sincere</span>
         </footer>
       </article>
@@ -336,54 +331,59 @@ Well done, I suppose.
       return str.charAt(0).toUpperCase() + str.slice(1);
     }
 
-    function buildMarkBody(name, relationship, tone) {
+    function buildIntro(name, relationship, sender, detail) {
       const who = name ? capitalise(name) : "you";
+      const rel = relationship ? relationship.toLowerCase() : "person of interest";
+      const senderName = sender ? capitalise(sender) : null;
+
+      const senderLine = senderName
+        ? `${senderName} told me you are their ${rel}.`
+        : `Someone has informed me you are, broadly speaking, a functioning adult.`;
+
+      const detailLine = detail
+        ? `\n\nThey also mentioned: "${detail}". I am choosing not to unpack that too deeply today.`
+        : "";
+
+      return `${who},\n\n${senderLine}${detailLine}\n`;
+    }
+
+    function buildMarkBody(name, relationship, tone, sender, detail) {
+      const intro = buildIntro(name, relationship, sender, detail);
+
       const rel = relationship ? relationship.toLowerCase() : "human being";
 
       const bases = {
         polite: [
-          `${who},
-
-I’m contractually obliged by social convention to acknowledge your birthday.
+          `\nI’m contractually obliged by social convention to acknowledge your birthday.
 
 As ${rel}, you remain one of the few variables in my life that hasn’t completely collapsed into chaos, which feels… statistically impressive.
 
 I hope the next year contains marginally fewer disappointments than the last. Let’s call that optimism.`,
-          `${who},
-
-Another birthday. The spreadsheet of your life has gained a new row.
+          `\nAnother birthday. The spreadsheet of your life has gained a new row.
 
 As your self-appointed ${rel}, I’d like to formally note that you are still here, still trying, and somehow still answering emails.
 
 That’s more than can be said for most of Western civilisation. Well done.`
         ],
         grim: [
-          `${who},
-
-It’s your birthday again, which feels frankly excessive.
+          `\nIt’s your birthday again, which feels frankly excessive.
 
 As your ${rel}, I have watched you navigate this flaming skip we call adulthood with a sort of tragic competence I deeply respect.
 
 May the coming year contain fewer meetings, fewer crises, and at least one pudding-based highlight.`,
-          `${who},
-
-Another year older. The body deteriorates, capitalism marches on, and yet here you are, still turning up.
+          `\nAnother year older. The body deteriorates, capitalism marches on, and yet here you are, still turning up.
 
 As your ${rel}, I consider this a sort of minor miracle.
 
 Happy birthday. Or at least, not-unhappy birthday. Let’s not oversell it.`
         ],
         existential: [
-          `${who},
-
-Time is a slow, bureaucratic conveyor belt, shunting us all towards the same inevitable outcome, and today it has stopped briefly to remind you of that fact.
+          `\nTime is a slow, bureaucratic conveyor belt, shunting us all towards the same inevitable outcome, and today it has stopped briefly to remind you of that fact.
 
 As your ${rel}, I feel morally obliged to say: I’m glad you’re on the belt at the same time as me.
 
 Happy birthday. Let’s make the next bit marginally less awful.`,
-          `${who},
-
-On paper, today is just an arbitrary point on an arbitrary calendar in an uncaring universe.
+          `\nOn paper, today is just an arbitrary point on an arbitrary calendar in an uncaring universe.
 
 But as your ${rel}, I’ve decided that your continued existence is statistically significant.
 
@@ -392,27 +392,45 @@ So yes, happy birthday. Against all odds, I’m genuinely pleased you exist. Don
       };
 
       const options = bases[tone] || bases.polite;
-      return options[Math.floor(Math.random() * options.length)];
+      const body = options[Math.floor(Math.random() * options.length)];
+
+      return intro + body;
     }
 
-    function buildJezBody(name) {
+    function buildJezBody(name, sender, detail) {
       const who = name ? capitalise(name) : "mate";
+      const senderName = sender ? capitalise(sender) : null;
+
+      const senderLine = senderName
+        ? `${senderName} says it’s your birthday, which is legally binding in party terms.`
+        : `Apparently it’s your birthday, which I’m prepared to accept without paperwork.`;
+
+      const detailLine = detail
+        ? `\n\nThey also mentioned: "${detail}". That sounds dangerously like a good night out waiting to happen.`
+        : "";
+
       return `${who},
 
-It’s your birthday! Which, scientifically speaking, means we absolutely have to do something ill-advised.
+${senderLine}${detailLine}
 
 I’m thinking: cheap lager, morally ambiguous snacks, and a vague plan we will almost certainly abandon by 9.17pm.
 
 Happy birthday. You’re not old, you’re just… conceptually interesting.`;
     }
 
-    function buildSuperHansBody(name) {
+    function buildSuperHansBody(name, sender, detail) {
       const who = name ? capitalise(name) : "Comrade";
+      const senderName = sender ? capitalise(sender) : "Someone you trust";
+
+      const detailLine = detail
+        ? `\n\n${senderName} also reckons you’re the kind of person who "${detail}". Frankly, that’s exactly the sort of energy we need for the collapse of civilisation.`
+        : "";
+
       return `${who},
 
 Birthday, is it? Nice.
 
-Listen: time isn’t real, age is a construct, and the whole system is basically a giant pyramid scheme for people who own premium trouser presses.
+${senderName} put the word out. Time isn’t real, age is a construct, and the whole system is basically a giant pyramid scheme for people who own premium trouser presses.${detailLine}
 
 So take the day, eat the cake, and remember: if it all goes wrong, we can always start a band.
 
@@ -422,16 +440,19 @@ Super Hans.`;
     function generateCard() {
       const nameInput = document.getElementById("name");
       const relationshipInput = document.getElementById("relationship");
+      const senderInput = document.getElementById("sender");
+      const detailInput = document.getElementById("detail");
       const toneSelect = document.getElementById("tone");
       const card = document.getElementById("card");
       const cardHeader = document.getElementById("card-header");
       const cardTitle = document.getElementById("card-title");
       const cardBody = document.getElementById("card-body");
-      const cardMeta = document.getElementById("card-meta");
       const status = document.getElementById("status");
 
       const name = nameInput.value.trim();
       const relationship = relationshipInput.value.trim();
+      const sender = senderInput.value.trim();
+      const detail = detailInput.value.trim();
       const tone = toneSelect.value;
 
       generateCount += 1;
@@ -442,7 +463,6 @@ Super Hans.`;
       cardTitle.textContent = "Happy birthday (within reason)";
 
       let bodyText;
-      let metaText = `Draft ${generateCount} of ∞`;
 
       if (generateCount % 5 === 0) {
         // Easter egg
@@ -451,22 +471,21 @@ Super Hans.`;
           card.classList.add("card--jez");
           cardHeader.textContent = "Jez got hold of the card";
           cardTitle.textContent = "This is basically a banger";
-          bodyText = buildJezBody(name);
+          bodyText = buildJezBody(name, sender, detail);
           status.textContent = "Easter egg: Jez has intervened. Mark is quietly horrified.";
         } else {
           card.classList.add("card--superhans");
           cardHeader.textContent = "Message from Super Hans";
           cardTitle.textContent = "Time is a flat pint";
-          bodyText = buildSuperHansBody(name);
+          bodyText = buildSuperHansBody(name, sender, detail);
           status.textContent = "Easter egg: Super Hans has rewritten your card. Proceed carefully.";
         }
       } else {
-        bodyText = buildMarkBody(name, relationship, tone);
+        bodyText = buildMarkBody(name, relationship, tone, sender, detail);
         status.textContent = "";
       }
 
       cardBody.textContent = bodyText;
-      cardMeta.textContent = metaText;
       lastCardText = `${cardTitle.textContent}\n\n${bodyText}`;
 
       // Enable action buttons
