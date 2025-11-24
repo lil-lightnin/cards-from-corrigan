@@ -63,12 +63,14 @@
       font-size: 14px;
       text-transform: uppercase;
       letter-spacing: 0.15em;
+      colour: #b2b2b2;
       color: #b2b2b2;
       margin-bottom: 16px;
     }
 
     .subhead {
       font-size: 15px;
+      colour: #d0d0d0;
       color: #d0d0d0;
       line-height: 1.5;
       margin-bottom: 20px;
@@ -79,6 +81,7 @@
       display: block;
       font-size: 13px;
       margin: 14px 0 4px;
+      colour: #c6c6c6;
       color: #c6c6c6;
     }
 
@@ -93,6 +96,7 @@
       border-radius: 0;
       border: 1px solid #444;
       background: #101010;
+      colour: #f5f5f5;
       color: #f5f5f5;
       box-sizing: border-box;
     }
@@ -109,6 +113,7 @@
 
     .help-text {
       font-size: 12px;
+      colour: #8a8a8a;
       color: #8a8a8a;
       margin-top: 2px;
     }
@@ -133,6 +138,7 @@
     .btn-primary {
       border-color: #f2f2f2;
       background: #f2f2f2;
+      colour: #111;
       color: #111;
     }
 
@@ -143,6 +149,7 @@
 
     .muted {
       font-size: 11px;
+      colour: #8a8a8a;
       color: #8a8a8a;
       margin-top: 8px;
     }
@@ -167,6 +174,7 @@
       max-width: 360px;
       min-height: 420px;
       background: #fdfdf8;
+      colour: #111;
       color: #111;
       border: 1px solid #c5c5c5;
       box-shadow: 0 14px 30px rgba(0, 0, 0, 0.6);
@@ -183,6 +191,7 @@
       font-size: 13px;
       letter-spacing: 0.15em;
       text-transform: uppercase;
+      colour: #7b7b7b;
       color: #7b7b7b;
       margin-bottom: 12px;
     }
@@ -203,6 +212,7 @@
     .card-footer {
       margin-top: 18px;
       font-size: 13px;
+      colour: #555;
       color: #555;
       display: flex;
       justify-content: flex-end;
@@ -216,6 +226,7 @@
       font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.16em;
+      colour: #a5a5a5;
       color: #a5a5a5;
     }
 
@@ -227,6 +238,7 @@
     }
 
     .card--jez .card-header {
+      colour: #b5319b;
       color: #b5319b;
     }
 
@@ -236,14 +248,98 @@
     }
 
     .card--superhans .card-header {
+      colour: #0d6f3c;
       color: #0d6f3c;
     }
 
     .status {
       font-size: 11px;
       margin-top: 6px;
+      colour: #cfcfcf;
       color: #cfcfcf;
       min-height: 1em;
+    }
+
+    /* Placeholder image */
+
+    .card-mark-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: centre;
+      align-items: center;
+      text-align: centre;
+      text-align: center;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .card-mark-illustration {
+      width: 100%;
+      height: 180px;
+      border: 1px solid #ddd;
+      background: linear-gradient(135deg, #f4f4f0, #e5e5dd);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-mark-illustration::before {
+      content: "";
+      position: absolute;
+      left: 10%;
+      bottom: 0;
+      width: 80px;
+      height: 120px;
+      border-radius: 40px 40px 10px 10px;
+      background: #d9cbb8; /* Mark’s body */
+    }
+
+    .card-mark-illustration::after {
+      content: "";
+      position: absolute;
+      left: 18%;
+      bottom: 100px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #f3e6d4; /* Mark’s head */
+      box-shadow: 0 0 0 2px #c8b89e;
+    }
+
+    .card-mark-screen {
+      position: absolute;
+      right: 12%;
+      bottom: 40px;
+      width: 110px;
+      height: 80px;
+      border-radius: 4px;
+      background: #222;
+      box-shadow: 0 0 0 3px #b9b9b2;
+    }
+
+    .card-mark-screen::before {
+      content: "";
+      position: absolute;
+      top: 18px;
+      left: 14px;
+      width: 60px;
+      height: 8px;
+      background: #3a3a3a;
+      box-shadow:
+        0 14px 0 #3a3a3a,
+        0 28px 0 #3a3a3a;
+    }
+
+    .card-mark-caption {
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .card-mark-caption span {
+      display: block;
+      font-size: 11px;
+      margin-top: 4px;
+      colour: #777;
+      color: #777;
     }
   </style>
 </head>
@@ -300,23 +396,21 @@
       <article class="card" id="card">
         <header>
           <div class="card-header" id="card-header">From the desk of Mark Corrigan</div>
-          <h2 class="card-title" id="card-title">Happy birthday (within reason)</h2>
+          <h2 class="card-title" id="card-title">Awaiting further instructions</h2>
         </header>
         <div class="card-body" id="card-body">
-Sophie,
-
-Sam told me you are their dad.
-
-I don’t really “do” celebrations, but society insists,
-so here we are.
-
-Consider this a formal acknowledgement that you
-have survived another rotation around a dying star.
-
-Well done, I suppose.
+          <div class="card-mark-placeholder">
+            <div class="card-mark-illustration">
+              <div class="card-mark-screen"></div>
+            </div>
+            <p class="card-mark-caption">
+              From the desk of Mark Corrigan
+              <span>Fill in the form to receive a heavily caveated birthday message.</span>
+            </p>
+          </div>
         </div>
         <footer class="card-footer">
-          <span class="pill">Uncomfortably sincere</span>
+          <span class="pill" id="card-footer-text">No card generated yet</span>
         </footer>
       </article>
     </section>
@@ -335,107 +429,147 @@ Well done, I suppose.
       return list[Math.floor(Math.random() * list.length)];
     }
 
-    function buildContextLines(name, relationship, sender, detail) {
-      const who = name ? capitalise(name) : "you";
+    function normaliseDetail(detail) {
+      if (!detail) return "";
+      let d = detail.trim();
+      // Soft tidy: remove leading "to "
+      d = d.replace(/^\s*to\s+/i, "");
+      return d;
+    }
+
+    function buildContext(name, relationship, sender, detail) {
+      const who = name ? capitalise(name) : "You";
       const rel = relationship ? relationship.toLowerCase() : "";
-      const senderName = sender ? capitalise(sender) : "Someone close to you";
+      const senderName = sender ? capitalise(sender) : "";
+      const cleanDetail = normaliseDetail(detail);
 
-      let openerOptions = [];
+      const lines = [];
 
-      if (rel) {
-        openerOptions.push(
-          `${senderName} tells me you’re their ${rel}. I’m not sure what the correct protocol is for that, so I’ve gone with “card”.`,
-          `${senderName} has reported that you occupy the role of ${rel}. I wasn’t aware that position was still open, but congratulations nonetheless.`,
-          `Apparently you’re ${senderName}’s ${rel}. I don’t fully understand how that works, but it seems to have stuck.`
-        );
-      } else {
-        openerOptions.push(
-          `${senderName} tells me it’s your birthday. I’ve decided to take this at face value.`,
-          `${senderName} insists today is significant for you. I have chosen not to argue.`
-        );
-      }
+      // Salutation
+      lines.push(`${who},`);
 
-      const opener = `${who},\n\n${randomItem(openerOptions)}`;
-
-      let detailLine = "";
-      if (detail) {
-        const trimmedDetail = detail.trim();
-        const detailOptions = [
-          `\n\nThey also mentioned that you "${trimmedDetail}". That feels like the sort of thing HR should know about, but I’ve opted to send a card instead.`,
-          `\n\nThere was also a note about you "${trimmedDetail}". I’m not sure if that’s a strength, a weakness, or both.`,
-          `\n\nApparently you "${trimmedDetail}". I don’t have the emotional bandwidth to unpack that, but it does make you sound oddly competent.`,
-          `\n\nIn the file it says you "${trimmedDetail}". I didn’t know we were keeping files, but here we are.`
+      // Relationship / sender line
+      if (senderName && rel) {
+        const relOptions = [
+          `You are officially registered as ${senderName}'s ${rel}. That sounds like quite a responsibility.`,
+          `Being ${senderName}'s ${rel} is, from what I gather, a full-time emotional role as well as a technical one.`,
+          `On the record, you are ${senderName}'s ${rel}. Off the record, I imagine that involves more admin than anyone admits.`,
+          `Somehow you ended up as ${senderName}'s ${rel}. I assume you agreed to this, but if not, it’s probably too late now.`
         ];
-        detailLine = randomItem(detailOptions);
+        lines.push("", randomItem(relOptions));
+      } else if (senderName && !rel) {
+        const relOptions = [
+          `${senderName} appears to rate you highly enough to commission a card. That already puts you ahead of most line managers.`,
+          `You seem to matter rather a lot to ${senderName}. Statistically, that’s not nothing.`,
+          `In the grand spreadsheet of people, ${senderName} has you flagged as “important”. That’s quite an achievement.`
+        ];
+        lines.push("", randomItem(relOptions));
+      } else if (!senderName && rel) {
+        const relOptions = [
+          `You are someone’s ${rel}. Brave.`,
+          `Apparently you have taken on the role of ${rel}. I hope there was a proper induction process.`,
+          `Being a ${rel} in this economy is not for the faint-hearted.`
+        ];
+        lines.push("", randomItem(relOptions));
+      } else {
+        const relOptions = [
+          `You have somehow made it onto the list of “people worth sending a card to”. Impressive.`,
+          `You are clearly significant enough to warrant stationery. That already puts you in a minority.`
+        ];
+        lines.push("", randomItem(relOptions));
       }
 
-      return { opener, detailLine };
+      // Detail line, as Mark’s own observation
+      if (cleanDetail) {
+        const detailOptions = [
+          `\nThe fact that you ${cleanDetail} suggests a level of commitment I find both admirable and faintly alarming.`,
+          `\nI also hear you ${cleanDetail}. That’s either a charming quirk or a cry for help, depending on the context.`,
+          `\nApparently ${cleanDetail} is just something you do now. Fascinating coping mechanism.`,
+          `\nYou also ${cleanDetail}, which feels like the sort of detail that would really confuse a future historian.`,
+          `\nI note, in passing, that you ${cleanDetail}. I’m choosing to interpret that as a sign of character rather than a red flag.`
+        ];
+        lines.push("", randomItem(detailOptions));
+      }
+
+      return lines.join("\n");
     }
 
     function buildMarkBody(name, relationship, tone, sender, detail) {
-      const { opener, detailLine } = buildContextLines(
-        name,
-        relationship,
-        sender,
-        detail
-      );
-
+      const context = buildContext(name, relationship, sender, detail);
       const rel = relationship ? relationship.toLowerCase() : "human being";
+      const cleanDetail = normaliseDetail(detail);
 
       const politeTemplates = [
         () => {
-          const middle = `\n\nI don’t really “do” celebrations, but civilisation has strong views on birthdays and I’m trying to appear broadly functional.\n\nFrom what I gather, you’re doing a reasonable job of being a ${rel} and not completely losing the plot. That already puts you ahead of several major institutions.\n\nSo yes. Happy birthday. Please treat this as a formal acknowledgement that you have successfully completed another year of existence.`;
-          return opener + detailLine + middle;
+          const middle = `\n\nI don’t really “do” celebrations, but civilisation has strong views on birthdays and I am trying to pass as broadly functional.\n\nFrom everything I’ve been told, you are doing a respectable job of being a ${rel} without completely losing the plot. That already puts you ahead of several key institutions.\n\nSo yes: happy birthday. Please treat this as a formal acknowledgement that you have successfully completed another year of existence.`;
+          return context + middle;
         },
         () => {
-          const middle = `\n\nThe spreadsheet of your life has gained another row. I’d colour it amber: not a crisis, but certainly something to keep an eye on.\n\nBy all accounts you’re holding things together with more grace than the current government, which is an admittedly low bar but still counts.\n\nI hope the next twelve months are marginally less chaotic and contain at least one decent pudding.`;
-          return opener + detailLine + middle;
+          const middle = `\n\nThe spreadsheet of your life has gained another row. I’d colour it amber: not a crisis, but certainly something to keep an eye on.\n\nYou appear to be balancing responsibilities, expectations and general chaos with an efficiency that would make most project managers cry.\n\nI hope the next twelve months are marginally less chaotic and contain at least one genuinely good pudding.`;
+          return context + middle;
         },
         () => {
-          const middleFirst = `\n\nBirthdays are essentially performance reviews where the universe refuses to give clear feedback. Still, the fact people are sending cards suggests you’re doing something right.`;
+          const middleFirst = `\n\nBirthdays are essentially performance reviews where the universe refuses to give clear feedback.\n\nStill, the fact people are sending cards suggests you are, broadly speaking, getting something right.`;
           const maybeExtra = Math.random() < 0.5
-            ? `\n\nIf nothing else, you have successfully accumulated experiences, anecdotes, and at least one regrettable purchase. That’s what passes for growth these days.`
+            ? `\n\nIf nothing else, you have accumulated experiences, anecdotes and at least one regrettable purchase. That’s what passes for growth these days.`
             : "";
-          const closing = `\n\nHappy birthday. Take the compliment, even if it’s making you slightly uncomfortable.`;
-          return opener + detailLine + middleFirst + maybeExtra + closing;
+          const closing = `\n\nHappy birthday. Accept the compliment, even if it is making you slightly uncomfortable.`;
+          return context + middleFirst + maybeExtra + closing;
+        },
+        () => {
+          const middle = `\n\nFrom a distance, all birthdays look the same: cake, messages, someone pretending to enjoy a novelty card.\n\nClose up, though, it’s just people quietly saying, “I’m glad you exist”. That seems to be the case here.\n\nSo: happy birthday. You appear to be one of the good ones.`;
+          return context + middle;
         }
       ];
 
       const grimTemplates = [
         () => {
-          const middle = `\n\nIt’s your birthday again, which feels frankly excessive. Time keeps advancing like a badly managed Direct Debit.\n\nStill, the reports on you as a ${rel} are surprisingly positive. In a world held together by emails and printer errors, that’s not nothing.\n\nMay the coming year contain fewer pointless meetings, fewer minor catastrophes, and more evenings where you actually sit down.`;
-          return opener + detailLine + middle;
+          const middle = `\n\nIt’s your birthday again, which feels slightly excessive. Time keeps advancing like a badly managed direct debit.\n\nEven so, the general consensus is that you are holding things together with more competence than the average institution.\n\nMay the coming year contain fewer pointless meetings, fewer small crises and more evenings where you actually sit down.`;
+          return context + middle;
         },
         () => {
-          const middleFirst = `\n\nAnother year older. The body sends more error messages, the inbox never empties, and yet you continue to show up. Statistically, that’s impressive.`;
-          const middleSecond = `\n\nFrom what I’ve heard, you’re one of the people keeping the whole thing from collapsing completely. I’m not saying that’s wise, but it is admirable.`;
+          const middleFirst = `\n\nAnother year older. The inbox never empties, the body files more complaints and yet you continue to show up. Statistically, that’s impressive.`;
+          const middleSecond = `\n\nApparently you are one of the people quietly stopping everything from collapsing. I’m not sure that’s fair, but it is admirable.`;
           const closing = `\n\nHappy birthday. Or at least, not-unhappy birthday. Let’s not oversell it.`;
-          return opener + detailLine + middleFirst + middleSecond + closing;
+          return context + middleFirst + middleSecond + closing;
         },
         () => {
-          const middle = `\n\nHonestly, adulthood seems to be mostly forms, heating bills, and pretending “busy” is a personality. The fact you’re still maintaining relationships and remembering dates is bordering on heroic.\n\nIf you can manage a quiet drink, an early night, and one small decision made purely for yourself, I’d call that a successful celebration.`;
-          return opener + detailLine + middle;
+          const middle = `\n\nAdulthood seems to be mostly forms, heating bills and pretending “busy” is a personality.\n\nThe fact you are still maintaining relationships and remembering birthdays suggests a level of competence bordering on heroic.\n\nIf you can manage a quiet drink, an early night and one small decision made purely for yourself, I’d call that a successful celebration.`;
+          return context + middle;
+        },
+        () => {
+          const middleFirst = `\n\nThere is no user manual for any of this. Yet somehow you are doing the job, being the ${rel}, remembering the dates and keeping the show on the road.`;
+          const maybeDetail = cleanDetail && Math.random() < 0.6
+            ? `\n\nIn light of the fact you also ${cleanDetail}, I can only assume you have access to extra hours in the day.`
+            : "";
+          const closing = `\n\nHappy birthday. You are doing better than the situation deserves.`;
+          return context + middleFirst + maybeDetail + closing;
         }
       ];
 
       const existentialTemplates = [
         () => {
-          const middleFirst = `\n\nOn paper, today is just an arbitrary point on an arbitrary calendar in an uncaring universe.\n\nBut apparently you matter to people. Statistically, that’s as close to meaning as most of us get.`;
-          const closing = `\n\nSo yes, happy birthday. Against all odds, your existence seems to be improving the general mess rather than making it worse. Try to enjoy that, briefly.`;
-          return opener + detailLine + middleFirst + closing;
+          const middleFirst = `\n\nOn paper, today is just an arbitrary point on an arbitrary calendar in an indifferent universe.\n\nIn practice, people have decided your existence is worth marking, which is about as close to meaning as any of us get.`;
+          const closing = `\n\nSo: happy birthday. Against all odds, you seem to be making things better rather than worse. Try to enjoy that, briefly.`;
+          return context + middleFirst + closing;
         },
         () => {
-          const middleFirst = `\n\nTime is basically a slow, bureaucratic conveyor belt shunting us towards the inevitable, and today it has paused just long enough to say: “You again?”`;
-          const maybeDetailEcho = detail
-            ? `\n\nThe fact you still find the energy to ${detail.toLowerCase()} suggests a level of resilience I can only describe as suspicious.`
+          const middleFirst = `\n\nTime is basically a slow, bureaucratic conveyor belt shunting us all towards the inevitable, and today it has paused just long enough to point at you.`;
+          const maybeDetailEcho = cleanDetail
+            ? `\n\nThe fact you still find the energy to ${cleanDetail} suggests a resilience I find both suspicious and reassuring.`
             : "";
-          const closing = `\n\nHappy birthday. Let’s make the next section of the belt marginally less awful, or at least better catered.`;
-          return opener + detailLine + middleFirst + maybeDetailEcho + closing;
+          const closing = `\n\nHappy birthday. Let’s make the next section of the conveyor belt marginally less awful, or at least better catered.`;
+          return context + middleFirst + maybeDetailEcho + closing;
         },
         () => {
-          const middle = `\n\nIf you zoom out far enough, none of this matters. But the people who care about you clearly haven’t zoomed out that far, and I’m inclined to trust their judgement over the void’s.\n\nExisting, caring, turning up – that’s the whole game. Everything else is admin.`;
-          const closing = `\n\nHappy birthday. You’re doing more of it right than you think.`;
-          return opener + detailLine + middle;
+          const middle = `\n\nIf you zoom out far enough, none of this matters. But the people who care about you clearly haven’t zoomed out that far, and I’m inclined to trust their judgement over the void’s.\n\nExisting, caring, turning up – that’s basically the whole game. Everything else is admin.`;
+          const closing = `\n\nHappy birthday. You are doing more of it right than you think.`;
+          return context + middle + closing;
+        },
+        () => {
+          const middleFirst = `\n\nLife does not come with checkpoints or save files, just these small moments where everyone agrees you’re still in the game.\n\nThis appears to be one of them.`;
+          const closing = `\n\nHappy birthday. Please continue confusing the universe by caring about people and showing up for them.`;
+          return context + middleFirst + closing;
         }
       ];
 
@@ -450,56 +584,72 @@ Well done, I suppose.
 
     function buildJezBody(name, sender, detail) {
       const who = name ? capitalise(name) : "mate";
-      const senderName = sender ? capitalise(sender) : null;
+      const senderName = sender ? capitalise(sender) : "someone who should know better";
+      const cleanDetail = normaliseDetail(detail);
 
-      const senderLine = senderName
-        ? `${senderName} says it’s your birthday, which is legally binding in party terms.`
-        : `Apparently it’s your birthday, which I’m prepared to accept without paperwork.`;
+      const openerOptions = [
+        `${who},\n\nIt’s your birthday, apparently. This is not a drill.`,
+        `${who},\n\nBirthday alert. The universe has given us a flimsy excuse to overdo it.`,
+        `${who},\n\nRight. It’s your birthday. Strong choice.`
+      ];
 
-      let detailLine = "";
-      if (detail) {
-        const trimmedDetail = detail.trim();
-        const options = [
-          `\n\nThey also mentioned you "${trimmedDetail}". That’s not a red flag, that’s basically a personality brand.`,
-          `\n\nI heard you "${trimmedDetail}". That’s exactly the sort of thing that leads to “a quick one” turning into a three-day saga.`,
-          `\n\nThere was something about you "${trimmedDetail}". I don’t fully understand it, but I respect it.`
+      let middleLines = [
+        `${senderName} clearly thinks you’re worth the admin of generating a card, which is basically love in the digital age.`
+      ];
+
+      if (cleanDetail) {
+        const detailOptions = [
+          `The fact you ${cleanDetail} is exactly the sort of thing that turns “just one drink” into a three-day concept piece.`,
+          `Also, you apparently ${cleanDetail}. That’s not a red flag, that’s a lifestyle brand.`,
+          `I hear you ${cleanDetail}. That’s the kind of detail biographers love and therapists worry about.`
         ];
-        detailLine = randomItem(options);
+        middleLines.push(randomItem(detailOptions));
       }
 
-      return `${who},
+      const closingOptions = [
+        `\nI’m thinking: cheap lager, morally ambiguous snacks and a plan we abandon by 9.17pm.\n\nHappy birthday. You’re not old, you’re just… conceptually interesting.`,
+        `\nLet’s mark the occasion with something ill-advised and carbs.\n\nHappy birthday. You remain, against all odds, extremely much.`
+      ];
 
-${senderLine}${detailLine}
-
-I’m thinking: cheap lager, morally ambiguous snacks, and a vague plan we will almost certainly abandon by 9.17pm.
-
-Happy birthday. You’re not old, you’re just… conceptually interesting.`;
+      return `${randomItem(openerOptions)}\n\n${middleLines.join(" ")}${randomItem(
+        closingOptions
+      )}`;
     }
 
     function buildSuperHansBody(name, sender, detail) {
       const who = name ? capitalise(name) : "Comrade";
       const senderName = sender ? capitalise(sender) : "Someone you trust";
+      const cleanDetail = normaliseDetail(detail);
+
+      const opener = `${who},\n\nBirthday, is it? Nice.`;
+
+      const middleBase = `\n\n${senderName} has flagged the situation. Time isn’t real, age is a construct and the whole system is basically a giant pyramid scheme for people who own premium trouser presses.`;
 
       let detailLine = "";
-      if (detail) {
-        const trimmedDetail = detail.trim();
+      if (cleanDetail) {
         const options = [
-          `\n\n${senderName} also reckons you’re the sort of person who "${trimmedDetail}". That is exactly the kind of energy you need when the system finally keels over.`,
-          `\n\nApparently you "${trimmedDetail}". Good. We’re going to need people like you when the sensible ones give up.`,
-          `\n\nIn my experience, people who "${trimmedDetail}" are either visionaries or a health and safety issue. Sometimes both.`
+          `\n\nApparently you ${cleanDetail}. That’s exactly the sort of energy we’re going to need when the sensible people give up.`,
+          `\n\nYou ${cleanDetail}, which suggests you’ll do very well when the whole thing tips over and we have to start again.`,
+          `\n\nIn my experience, people who ${cleanDetail} are either visionaries or a health and safety issue. Sometimes both.`
         ];
         detailLine = randomItem(options);
       }
 
-      return `${who},
+      const closing = `\n\nSo take the day, eat the cake and remember: if it all goes wrong, we can always start a band.\n\nSuper Hans.`;
 
-Birthday, is it? Nice.
+      return opener + middleBase + detailLine + closing;
+    }
 
-${senderName} put the word out. Time isn’t real, age is a construct, and the whole system is basically a giant pyramid scheme for people who own premium trouser presses.${detailLine}
-
-So take the day, eat the cake, and remember: if it all goes wrong, we can always start a band.
-
-Super Hans.`;
+    function generateFooterText(sender) {
+      if (sender) {
+        return `Generated by ${capitalise(sender)}`;
+      }
+      const options = [
+        "Generated by someone who skipped the name field",
+        "Generated by an anonymous operative",
+        "Generated by a concerned third party"
+      ];
+      return randomItem(options);
     }
 
     function generateCard() {
@@ -512,6 +662,7 @@ Super Hans.`;
       const cardHeader = document.getElementById("card-header");
       const cardTitle = document.getElementById("card-title");
       const cardBody = document.getElementById("card-body");
+      const footerTextEl = document.getElementById("card-footer-text");
       const status = document.getElementById("status");
 
       const name = nameInput.value.trim();
@@ -525,9 +676,9 @@ Super Hans.`;
       // Reset styles
       card.classList.remove("card--jez", "card--superhans");
       cardHeader.textContent = "From the desk of Mark Corrigan";
-      cardTitle.textContent = "Happy birthday (within reason)";
 
       let bodyText;
+      let titleText = "Happy birthday (within reason)";
 
       if (generateCount % 5 === 0) {
         // Easter egg
@@ -535,13 +686,13 @@ Super Hans.`;
         if (eggType === "jez") {
           card.classList.add("card--jez");
           cardHeader.textContent = "Jez got hold of the card";
-          cardTitle.textContent = "This is basically a banger";
+          titleText = "This is basically a banger";
           bodyText = buildJezBody(name, sender, detail);
           status.textContent = "Easter egg: Jez has intervened. Mark is quietly horrified.";
         } else {
           card.classList.add("card--superhans");
           cardHeader.textContent = "Message from Super Hans";
-          cardTitle.textContent = "Time is a flat pint";
+          titleText = "Time is a flat pint";
           bodyText = buildSuperHansBody(name, sender, detail);
           status.textContent = "Easter egg: Super Hans has rewritten your card. Proceed carefully.";
         }
@@ -550,8 +701,11 @@ Super Hans.`;
         status.textContent = "";
       }
 
+      cardTitle.textContent = titleText;
       cardBody.textContent = bodyText;
-      lastCardText = `${cardTitle.textContent}\n\n${bodyText}`;
+      footerTextEl.textContent = generateFooterText(sender);
+
+      lastCardText = `${titleText}\n\n${bodyText}\n\n${footerTextEl.textContent}`;
 
       // Enable action buttons
       document.getElementById("copy-btn").disabled = false;
