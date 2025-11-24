@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cards from Corrigan</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #1b1b1b;
+      color: #f5f5f5;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      padding: 24px;
+      background: radial-gradient(circle at top, #3a3a3a 0, #111 60%);
+    }
+
+    .frame {
+      max-width: 900px;
+      width: 100%;
+      border: 1px solid #444;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.7);
+      background: #151515;
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+      gap: 0;
+    }
+
+    @media (max-width: 720px) {
+      .frame {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .panel {
+      padding: 24px 28px;
+    }
+
+    .panel--left {
+      border-right: 1px solid #333;
+    }
+
+    @media (max-width: 720px) {
+      .panel--left {
+        border-right: none;
+        border-bottom: 1px solid #333;
+      }
+    }
+
+    h1 {
+      font-size: 28px;
+      margin: 0 0 8px;
+      letter-spacing: 0.02em;
+    }
+
+    .tagline {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #b2b2b2;
+      margin-bottom: 16px;
+    }
+
+    .subhead {
+      font-size: 15px;
+      color: #d0d0d0;
+      line-height: 1.5;
+      margin-bottom: 20px;
+      max-width: 30rem;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      margin: 14px 0 4px;
+      color: #c6c6c6;
+    }
+
+    input, select, button, textarea {
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 0;
+      border: 1px solid #444;
+      background: #101010;
+      color: #f5f5f5;
+      box-sizing: border-box;
+    }
+
+    input:focus, select:focus, button:focus {
+      outline: 1px solid #e1e1e1;
+      outline-offset: 1px;
+    }
+
+    .help-text {
+      font-size: 12px;
+      color: #8a8a8a;
+      margin-top: 2px;
+    }
+
+    .controls {
+      margin-top: 18px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      border: 1px solid #777;
+      background: #202020;
+      padding: 8px 14px;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-size: 11px;
+    }
+
+    .btn-primary {
+      border-color: #f2f2f2;
+      background: #f2f2f2;
+      color: #111;
+    }
+
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+
+    .muted {
+      font-size: 11px;
+      color: #8a8a8a;
+      margin-top: 8px;
+    }
+
+    /* Right-hand card preview */
+
+    .card-panel {
+      background: repeating-linear-gradient(
+        135deg,
+        #171717,
+        #171717 8px,
+        #151515 8px,
+        #151515 16px
+      );
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 360px;
+      min-height: 420px;
+      background: #fdfdf8;
+      color: #111;
+      border: 1px solid #c5c5c5;
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.6);
+      padding: 24px 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "HMRC APPROVED";
+      position: absolute;
+      top: 10px;
+      right: -42px;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transform: rotate(33deg);
+      border: 1px solid #c0c0c0;
+      padding: 4px 48px;
+      background: rgba(245, 245, 245, 0.85);
+      color: #666;
+    }
+
+    .card-header {
+      font-family: "Georgia", "Times New Roman", serif;
+      font-size: 13px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #7b7b7b;
+      margin-bottom: 12px;
+    }
+
+    .card-title {
+      font-family: "Georgia", "Times New Roman", serif;
+      font-size: 22px;
+      margin: 0 0 12px;
+    }
+
+    .card-body {
+      font-family: "Georgia", "Times New Roman", serif;
+      font-size: 14px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    .card-footer {
+      margin-top: 18px;
+      font-size: 13px;
+      color: #555;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .card-meta {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #949494;
+    }
+
+    /* Easter egg fonts */
+
+    .card--jez .card-body {
+      font-family: "Comic Sans MS", "Comic Sans", cursive;
+      font-size: 14px;
+    }
+
+    .card--jez .card-header {
+      color: #b5319b;
+    }
+
+    .card--superhans .card-body {
+      font-family: "Courier New", monospace;
+      font-size: 13px;
+    }
+
+    .card--superhans .card-header {
+      color: #0d6f3c;
+    }
+
+    .pill {
+      border-radius: 999px;
+      padding: 3px 10px;
+      border: 1px solid #444;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: #a5a5a5;
+    }
+
+    .status {
+      font-size: 11px;
+      margin-top: 6px;
+      color: #cfcfcf;
+      min-height: 1em;
+    }
+  </style>
+</head>
+<body>
+  <main class="frame">
+    <section class="panel panel--left">
+      <div class="tagline">Cards from Corrigan</div>
+      <h1>A birthday card generator from the man who considers white bread pudding.</h1>
+      <p class="subhead">
+        Mark your loved one's inevitable march towards certain death with a birthday card from an honourable man.
+      </p>
+
+      <form id="card-form" onsubmit="event.preventDefault(); generateCard();">
+        <label for="name">Who is this for?</label>
+        <input id="name" type="text" placeholder="e.g. Sophie, Mum, Jeff from Procurement" />
+
+        <label for="relationship">What are they to you?</label>
+        <input id="relationship" type="text" placeholder="friend, partner, colleague, mysterious landlord" />
+
+        <label for="tone">How bleak are we going?</label>
+        <select id="tone">
+          <option value="polite">Politely anxious</option>
+          <option value="grim">Fairly grim</option>
+          <option value="existential">Full existential collapse</option>
+        </select>
+        <p class="help-text">
+          Mark will try to keep it appropriate. In his own way.
+        </p>
+
+        <div class="controls">
+          <button type="submit" class="btn btn-primary">Generate card</button>
+          <button type="button" class="btn" id="copy-btn" disabled>Copy</button>
+          <button type="button" class="btn" id="download-btn" disabled>Download</button>
+          <button type="button" class="btn" id="share-btn" disabled>Share</button>
+        </div>
+
+        <p class="muted">
+          Every fifth card is gently hijacked by Jez or Super Hans. Consider it a safeguarding issue.
+        </p>
+        <p class="status" id="status"></p>
+      </form>
+    </section>
+
+    <section class="panel card-panel">
+      <article class="card" id="card">
+        <header>
+          <div class="card-header" id="card-header">From the desk of Mark Corrigan</div>
+          <h2 class="card-title" id="card-title">Happy Birthday (within reason)</h2>
+        </header>
+        <div class="card-body" id="card-body">
+I don’t really “do” celebrations, but society insists,
+so here we are.
+
+Consider this a formal acknowledgement that you
+have survived another rotation around a dying star.
+
+Well done, I suppose.
+        </div>
+        <footer class="card-footer">
+          <span class="card-meta" id="card-meta">Draft 1 of n</span>
+          <span class="pill">Uncomfortably sincere</span>
+        </footer>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    let generateCount = 0;
+    let lastCardText = "";
+
+    function capitalise(str) {
+      if (!str) return "";
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    function buildMarkBody(name, relationship, tone) {
+      const who = name ? capitalise(name) : "you";
+      const rel = relationship ? relationship.toLowerCase() : "human being";
+
+      const bases = {
+        polite: [
+          `${who},
+
+I’m contractually obliged by social convention to acknowledge your birthday.
+
+As ${rel}, you remain one of the few variables in my life that hasn’t completely collapsed into chaos, which feels… statistically impressive.
+
+I hope the next year contains marginally fewer disappointments than the last. Let’s call that optimism.`,
+          `${who},
+
+Another birthday. The spreadsheet of your life has gained a new row.
+
+As your self-appointed ${rel}, I’d like to formally note that you are still here, still trying, and somehow still answering emails.
+
+That’s more than can be said for most of Western civilisation. Well done.`
+        ],
+        grim: [
+          `${who},
+
+It’s your birthday again, which feels frankly excessive.
+
+As your ${rel}, I have watched you navigate this flaming skip we call adulthood with a sort of tragic competence I deeply respect.
+
+May the coming year contain fewer meetings, fewer crises, and at least one pudding-based highlight.`,
+          `${who},
+
+Another year older. The body deteriorates, capitalism marches on, and yet here you are, still turning up.
+
+As your ${rel}, I consider this a sort of minor miracle.
+
+Happy birthday. Or at least, not-unhappy birthday. Let’s not oversell it.`
+        ],
+        existential: [
+          `${who},
+
+Time is a slow, bureaucratic conveyor belt, shunting us all towards the same inevitable outcome, and today it has stopped briefly to remind you of that fact.
+
+As your ${rel}, I feel morally obliged to say: I’m glad you’re on the belt at the same time as me.
+
+Happy birthday. Let’s make the next bit marginally less awful.`,
+          `${who},
+
+On paper, today is just an arbitrary point on an arbitrary calendar in an uncaring universe.
+
+But as your ${rel}, I’ve decided that your continued existence is statistically significant.
+
+So yes, happy birthday. Against all odds, I’m genuinely pleased you exist. Don’t make a big thing of it.`
+        ]
+      };
+
+      const options = bases[tone] || bases.polite;
+      return options[Math.floor(Math.random() * options.length)];
+    }
+
+    function buildJezBody(name) {
+      const who = name ? capitalise(name) : "mate";
+      return `${who},
+
+It’s your birthday! Which, scientifically speaking, means we absolutely have to do something ill-advised.
+
+I’m thinking: cheap lager, morally ambiguous snacks, and a vague plan we will almost certainly abandon by 9.17pm.
+
+Happy birthday. You’re not old, you’re just… conceptually interesting.`;
+    }
+
+    function buildSuperHansBody(name) {
+      const who = name ? capitalise(name) : "Comrade";
+      return `${who},
+
+Birthday, is it? Nice.
+
+Listen: time isn’t real, age is a construct, and the whole system is basically a giant pyramid scheme for people who own premium trouser presses.
+
+So take the day, eat the cake, and remember: if it all goes wrong, we can always start a band.
+
+Super Hans.`;
+    }
+
+    function generateCard() {
+      const nameInput = document.getElementById("name");
+      const relationshipInput = document.getElementById("relationship");
+      const toneSelect = document.getElementById("tone");
+      const card = document.getElementById("card");
+      const cardHeader = document.getElementById("card-header");
+      const cardTitle = document.getElementById("card-title");
+      const cardBody = document.getElementById("card-body");
+      const cardMeta = document.getElementById("card-meta");
+      const status = document.getElementById("status");
+
+      const name = nameInput.value.trim();
+      const relationship = relationshipInput.value.trim();
+      const tone = toneSelect.value;
+
+      generateCount += 1;
+
+      // Reset styles
+      card.classList.remove("card--jez", "card--superhans");
+      cardHeader.textContent = "From the desk of Mark Corrigan";
+      cardTitle.textContent = "Happy birthday (within reason)";
+
+      let bodyText;
+      let metaText = `Draft ${generateCount} of ∞`;
+
+      if (generateCount % 5 === 0) {
+        // Easter egg
+        const eggType = Math.random() < 0.5 ? "jez" : "superhans";
+        if (eggType === "jez") {
+          card.classList.add("card--jez");
+          cardHeader.textContent = "Jez got hold of the card";
+          cardTitle.textContent = "This is basically a banger";
+          bodyText = buildJezBody(name);
+          status.textContent = "Easter egg: Jez has intervened. Mark is quietly horrified.";
+        } else {
+          card.classList.add("card--superhans");
+          cardHeader.textContent = "Message from Super Hans";
+          cardTitle.textContent = "Time is a flat pint";
+          bodyText = buildSuperHansBody(name);
+          status.textContent = "Easter egg: Super Hans has rewritten your card. Proceed carefully.";
+        }
+      } else {
+        bodyText = buildMarkBody(name, relationship, tone);
+        status.textContent = "";
+      }
+
+      cardBody.textContent = bodyText;
+      cardMeta.textContent = metaText;
+      lastCardText = `${cardTitle.textContent}\n\n${bodyText}`;
+
+      // Enable action buttons
+      document.getElementById("copy-btn").disabled = false;
+      document.getElementById("download-btn").disabled = false;
+      document.getElementById("share-btn").disabled = !navigator.share;
+    }
+
+    document.getElementById("copy-btn").addEventListener("click", async () => {
+      const status = document.getElementById("status");
+      try {
+        await navigator.clipboard.writeText(lastCardText);
+        status.textContent = "Copied to clipboard. Try not to paste it into the team Slack by mistake.";
+      } catch (err) {
+        status.textContent = "Couldn’t copy. Your browser is being awkward.";
+      }
+    });
+
+    document.getElementById("download-btn").addEventListener("click", () => {
+      const blob = new Blob([lastCardText], { type: "text/plain" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "cards-from-corrigan.txt";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      const status = document.getElementById("status");
+      status.textContent = "Text file downloaded. Very official, very grown up.";
+    });
+
+    document.getElementById("share-btn").addEventListener("click", async () => {
+      const status = document.getElementById("status");
+      if (!navigator.share) return;
+      try {
+        await navigator.share({
+          title: "Card from Corrigan",
+          text: lastCardText
+        });
+        status.textContent = "Shared. The social performance continues.";
+      } catch (err) {
+        status.textContent = "Share cancelled. Understandable.";
+      }
+    });
+  </script>
+</body>
+</html>
